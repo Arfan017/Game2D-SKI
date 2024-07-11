@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: bea3e53157da6f24db1dd632a52638bf
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: cc34d0f3dc257a442819830b408c5322, type: 3}
+  missingFiles: []
+  errors:
+  - Invalid rectangle (Tile ID ='52') in tileset 'Autumn' has zero width
+  - Invalid rectangle (Tile ID ='70') in tileset 'Autumn' has zero width
+  warnings: []
+  missingSortingLayers: []
+  missingLayers: []
+  missingTags: []
+  importerVersion: 13
+  pixelsPerUnit: 100
+  edgesPerEllipse: 215
+  numberOfObjectsImported: 147
+  useSpriteAtlas: 1
+  atlasWidth: 8192
+  atlasHeight: 8192
