@@ -16,20 +16,6 @@ public class SurpriseBox : MonoBehaviour
         originalPosition = transform.position;
     }
 
-    // void OnTriggerEnter2D(Collider2D collider)
-    // {
-    //     if (collider.CompareTag("Player") && !isHit)
-    //     {
-    //         PlayerController player = collider.GetComponent<PlayerController>();
-    //         if (player != null && player.IsMovingUpwards())
-    //         {
-    //             isHit = true;
-    //             StartCoroutine(MoveBox());
-    //             SpawnItem();
-    //         }
-    //     }
-    // }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && !isHit)
