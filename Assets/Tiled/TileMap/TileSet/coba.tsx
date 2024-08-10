@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.0" name="coba" tilewidth="1024" tileheight="1024" tilecount="51" columns="0">
+<tileset version="1.10" tiledversion="1.11.0" name="coba" tilewidth="1024" tileheight="1024" tilecount="54" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image source="../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Clear.png" width="512" height="512"/>
@@ -174,5 +174,14 @@
  </tile>
  <tile id="50">
   <image source="../../../Assets/2DPlatformerCartoonPack/Interactibles/Signs/TopRight.png" width="512" height="512"/>
+ </tile>
+ <tile id="51">
+  <image source="../../../Assets/2DPlatformerCartoonPack/Collectibles/Coins/Gold.png" width="256" height="256"/>
+ </tile>
+ <tile id="52">
+  <image source="../../../Assets/2DPlatformerCartoonPack/Interactibles/Blocs/Surprise_Gold.png" width="512" height="512"/>
+ </tile>
+ <tile id="53">
+  <image source="../../../Assets/2DPlatformerCartoonPack/Interactibles/Chests/Gold.png" width="512" height="512"/>
  </tile>
 </tileset>

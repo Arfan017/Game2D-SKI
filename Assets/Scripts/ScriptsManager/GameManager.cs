@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IDataPersistence
 {
     public static GameManager Instance;
     public TextMeshProUGUI scoreText;
@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject PanelMenang;
     public GameObject PanelKalah;
     public GameObject PanelPause;
+    private DataParsistenceManager dataParsistenceManager;
 
     private void Awake()
     {
@@ -29,6 +30,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+
+    private void Start()
+    {
+        dataParsistenceManager = FindAnyObjectByType<DataParsistenceManager>();
     }
 
     public void AddScore(int PointScore)
@@ -85,6 +92,7 @@ public class GameManager : MonoBehaviour
 
     public void Selanjutnya()
     {
+        dataParsistenceManager.SaveGame();
         SceneManager.LoadScene("MapScene");
         Time.timeScale = 1;
     }
@@ -113,5 +121,17 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1;
+    }
+
+    public void LoadData(GameData data)
+    {
+
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.DataCoin = score;
+        data.DataKey = key;
+        data.DataCoinQuest = quiz;
     }
 }
