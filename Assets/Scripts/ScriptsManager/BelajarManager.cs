@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,13 +19,14 @@ public class BelajarManager : MonoBehaviour, IDataPersistence
     public GameObject PanelMateri4;
     public GameObject PanelBukaMateri;
     public GameObject PanelPeringatan;
+    private DataParsistenceManager dataParsistenceManager;
+    public TextMeshProUGUI TextKey;
     Boolean isMateri1Unlock;
     Boolean isMateri2Unlock;
     Boolean isMateri3Unlock;
     Boolean isMateri4Unlock;
-    int MateriSaatIni = 0;
-    int key = 12;
-    private DataParsistenceManager dataParsistenceManager;
+    int MateriSaatIni;
+    int key;
 
     public bool IsMateri1Unlock { get => isMateri1Unlock; set => isMateri1Unlock = value; }
     public bool IsMateri2Unlock { get => isMateri2Unlock; set => isMateri2Unlock = value; }
@@ -36,11 +38,11 @@ public class BelajarManager : MonoBehaviour, IDataPersistence
         dataParsistenceManager = FindAnyObjectByType<DataParsistenceManager>();
     }
 
-
     private void Start()
     {
-
         DataParsistenceManager.instance.LoadGame();
+
+        TextKey.text = key.ToString() + " Key";
 
         if (buttonMateri != null && buttonMateri.Length >= 4)
         {
@@ -53,8 +55,6 @@ public class BelajarManager : MonoBehaviour, IDataPersistence
         {
             Debug.LogWarning("Tidak cukup tombol materi yang ditetapkan.");
         }
-
-        dataParsistenceManager.LoadGame();
 
         if (IsMateri1Unlock)
         {
@@ -75,7 +75,6 @@ public class BelajarManager : MonoBehaviour, IDataPersistence
         {
             buttonMateri[3].GetComponent<UnityEngine.UI.Image>().sprite = imageMateri4Unlock;
         }
-
     }
 
     private void Materi1()
@@ -139,30 +138,38 @@ public class BelajarManager : MonoBehaviour, IDataPersistence
                 case 1:
                     IsMateri1Unlock = true;
                     PanelBukaMateri.SetActive(false);
-                    dataParsistenceManager.SaveGame();
                     buttonMateri[0].GetComponent<UnityEngine.UI.Image>().sprite = imageMateri1Unlock;
                     key -= 3;
+                    TextKey.text = key.ToString() + " Key";
+                    // PlayerPrefs.SetInt("Key_", key);
+                    DataParsistenceManager.instance.SaveGame();
                     break;
                 case 2:
                     IsMateri2Unlock = true;
                     PanelBukaMateri.SetActive(false);
-                    dataParsistenceManager.SaveGame();
                     buttonMateri[1].GetComponent<UnityEngine.UI.Image>().sprite = imageMateri2Unlock;
                     key -= 3;
+                    TextKey.text = key.ToString() + " Key";
+                    // PlayerPrefs.SetInt("Key_", key);
+                    DataParsistenceManager.instance.SaveGame();
                     break;
                 case 3:
                     IsMateri3Unlock = true;
                     PanelBukaMateri.SetActive(false);
-                    dataParsistenceManager.SaveGame();
                     buttonMateri[2].GetComponent<UnityEngine.UI.Image>().sprite = imageMateri3Unlock;
                     key -= 3;
+                    TextKey.text = key.ToString() + " Key";
+                    // PlayerPrefs.SetInt("Key_", key);
+                    DataParsistenceManager.instance.SaveGame();
                     break;
                 case 4:
                     IsMateri4Unlock = true;
                     PanelBukaMateri.SetActive(false);
-                    dataParsistenceManager.SaveGame();
                     buttonMateri[3].GetComponent<UnityEngine.UI.Image>().sprite = imageMateri4Unlock;
                     key -= 3;
+                    TextKey.text = key.ToString() + " Key";
+                    // PlayerPrefs.SetInt("Key_", key);
+                    DataParsistenceManager.instance.SaveGame();
                     break;
             }
         }
@@ -178,6 +185,7 @@ public class BelajarManager : MonoBehaviour, IDataPersistence
         IsMateri2Unlock = data.DataStatusMateri2;
         IsMateri3Unlock = data.DataStatusMateri3;
         IsMateri4Unlock = data.DataStatusMateri4;
+        key = data.DataKey;
     }
 
     public void SaveData(GameData data)
@@ -186,6 +194,7 @@ public class BelajarManager : MonoBehaviour, IDataPersistence
         data.DataStatusMateri2 = IsMateri2Unlock;
         data.DataStatusMateri3 = IsMateri3Unlock;
         data.DataStatusMateri4 = IsMateri4Unlock;
+        data.DataKey = key;
     }
 
     public void GoToMainMenu()

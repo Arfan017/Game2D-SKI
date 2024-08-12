@@ -10,6 +10,7 @@ public class ItemController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            Debug.Log("Item collected!");
             // Panggil metode untuk menambah skor
             GameManager.Instance.AddScore(scoreValue);
 

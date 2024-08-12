@@ -8,10 +8,10 @@ public class PlayerController : MonoBehaviour
     public float acceleration = 50f;
     public float deceleration = 50f;
     public float jumpHeight = 4f;
+    public AudioSource audioJump;
+    public AudioSource audioHitEnemy;
     private float jumpForce;
-
     private bool isGrounded;
-
     private Rigidbody2D rb;
     private Collider2D coll;
     public LayerMask groundLayer;
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         trigger.triggers.Add(pointerDown);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (isDead) return;
 
@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
+            audioJump.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             animator.SetBool("IsJump", true);
         }
@@ -115,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Enemy"))
+        if (collider.gameObject.CompareTag("Enemy") && !isDead)
         {
             if (rb.velocity.y < 0)
             {
@@ -124,6 +125,7 @@ public class PlayerController : MonoBehaviour
                 {
                     enemyController.EnemyIsAttcked();
                 }
+                audioHitEnemy.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce / 2); // Bounce after hitting enemy
             }
             else
@@ -133,7 +135,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (collider.gameObject.CompareTag("Trap"))
+        if (collider.gameObject.CompareTag("Trap") && !isDead)
         {
             PlayerIsAttacked();
         }

@@ -16,8 +16,8 @@ public class DataParsistenceManager : MonoBehaviour
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
-
     public static DataParsistenceManager instance { get; private set; }
+    private bool shouldSaveOnUnload = true;
 
     private void Awake()
     {
@@ -31,6 +31,11 @@ public class DataParsistenceManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+    }
+
+    public void SetSaveOnUnload(bool shouldSave)
+    {
+        shouldSaveOnUnload = shouldSave;
     }
 
     private void OnEnable()
@@ -53,7 +58,12 @@ public class DataParsistenceManager : MonoBehaviour
 
     public void OnSceneUnloaded(Scene scene)
     {
-        SaveGame();
+        if (shouldSaveOnUnload)
+        {
+            SaveGame();
+        }
+        // Reset ke true setelah setiap unload
+        shouldSaveOnUnload = true;
     }
 
     public void NewGame()

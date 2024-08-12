@@ -14,6 +14,7 @@ public class MapManager : MonoBehaviour, IDataPersistence
     public GameObject PanelPeringatan;
     public TextMeshProUGUI Textcoin;
     public TextMeshProUGUI TextcoinQuest;
+
     Boolean isGame1Unlock;
     Boolean isGame2Unlock = false;
     Boolean isGame3Unlock = false;
@@ -23,16 +24,18 @@ public class MapManager : MonoBehaviour, IDataPersistence
     public bool IsGame2Unlock { get => isGame2Unlock; set => isGame2Unlock = value; }
     public bool IsGame3Unlock { get => isGame3Unlock; set => isGame3Unlock = value; }
     public bool IsGame4Unlock { get => isGame4Unlock; set => isGame4Unlock = value; }
-    int gameLvl = 2;
-    int coinQuest = 5;
-    int coin = 100;
 
+    private TextMeshProUGUI TextCoinQuest;
+    private TextMeshProUGUI TextCoin;
+    int gameLvl = 2;
+    int coinQuest = 0;
+    int coin = 0;
+    int key = 0;
     private DataParsistenceManager dataParsistenceManager;
 
     private void Awake()
     {
         dataParsistenceManager = FindAnyObjectByType<DataParsistenceManager>();
-
     }
 
     private void Start()
@@ -114,25 +117,40 @@ public class MapManager : MonoBehaviour, IDataPersistence
                 case 2:
                     IsGame2Unlock = true;
                     PanelBukaGame.SetActive(false);
-                    dataParsistenceManager.SaveGame();
                     coinQuest -= 4;
                     coin -= 100;
+                    // PlayerPrefs.SetInt("Coin_", coin);
+                    // PlayerPrefs.SetInt("CoinQuest_", coinQuest);
+                    // PlayerPrefs.SetInt("key_", key);
+                    DataParsistenceManager.instance.SaveGame();
+                    Textcoin.text = coin.ToString();
+                    TextcoinQuest.text = coinQuest.ToString();
                     break;
 
                 case 3:
                     IsGame3Unlock = true;
                     PanelBukaGame.SetActive(false);
-                    dataParsistenceManager.SaveGame();
                     coinQuest -= 4;
                     coin -= 100;
+                    // PlayerPrefs.SetInt("Coin_", coin);
+                    // PlayerPrefs.SetInt("CoinQuest_", coinQuest);
+                    // PlayerPrefs.SetInt("Key_", key);
+                    DataParsistenceManager.instance.SaveGame();
+                    Textcoin.text = coin.ToString();
+                    TextcoinQuest.text = coinQuest.ToString();
                     break;
 
                 case 4:
                     IsGame4Unlock = true;
                     PanelBukaGame.SetActive(false);
-                    dataParsistenceManager.SaveGame();
                     coinQuest -= 4;
                     coin -= 100;
+                    // PlayerPrefs.SetInt("Coin_", coin);
+                    // PlayerPrefs.SetInt("CoinQuest_", coinQuest);
+                    // PlayerPrefs.SetInt("Key_", key);
+                    DataParsistenceManager.instance.SaveGame();
+                    Textcoin.text = coin.ToString();
+                    TextcoinQuest.text = coinQuest.ToString();
                     break;
             }
         }
@@ -148,6 +166,9 @@ public class MapManager : MonoBehaviour, IDataPersistence
         IsGame2Unlock = data.DataStatusGame2;
         IsGame3Unlock = data.DataStatusGame3;
         IsGame4Unlock = data.DataStatusGame4;
+        coinQuest = data.DataCoinQuest;
+        coin = data.DataCoin;
+        key = data.DataKey;
     }
 
     public void SaveData(GameData data)
@@ -156,5 +177,8 @@ public class MapManager : MonoBehaviour, IDataPersistence
         data.DataStatusGame2 = IsGame2Unlock;
         data.DataStatusGame3 = IsGame3Unlock;
         data.DataStatusGame4 = IsGame4Unlock;
+        data.DataCoinQuest = coinQuest;
+        data.DataCoin = coin;
+        data.DataKey = key;
     }
 }

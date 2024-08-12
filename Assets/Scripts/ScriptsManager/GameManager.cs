@@ -12,13 +12,18 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public TextMeshProUGUI keyTextFromPanel;
     public TextMeshProUGUI ScoreTextFromPanel;
     public TextMeshProUGUI QuizTextFromPanel;
-    private int score = 0;
-    private int key = 0;
-    private int quiz = 0;
     public GameObject PanelMenang;
     public GameObject PanelKalah;
     public GameObject PanelPause;
+    public AudioSource audioCollectCoin;
+    public AudioSource audioCollectKey;
+    public AudioSource audiokalah;
+    public AudioSource audioMenang;
+    private int score = 0;
+    private int key = 0;
+    private int quiz = 0;
     private DataParsistenceManager dataParsistenceManager;
+    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -32,10 +37,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
-
     private void Start()
     {
         dataParsistenceManager = FindAnyObjectByType<DataParsistenceManager>();
+        audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     public void AddScore(int PointScore)
@@ -61,6 +66,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         if (scoreText != null)
         {
             scoreText.text = score.ToString();
+            audioCollectCoin.Play();
         }
     }
 
@@ -69,6 +75,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         if (keyText != null)
         {
             keyText.text = key.ToString();
+            audioCollectKey.Play();
         }
     }
 
@@ -87,18 +94,43 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void IsKalah()
     {
+        // if (audioManager != null)
+        // {
+        //     audioManager.StopAllAudio(); // Metode yang Anda buat di AudioManager
+        // }
+        Destroy(audioManager.gameObject);
+        AudioManager.instance.StopAllAudio();
+        audiokalah.Play();
         PanelKalah.SetActive(true);
     }
 
     public void Selanjutnya()
     {
-        dataParsistenceManager.SaveGame();
+        // int Coin_ = PlayerPrefs.GetInt("Coin_", 0);
+        // int CoinQuest_ = PlayerPrefs.GetInt("CoinQuest_", 0);
+        // int Key_ = PlayerPrefs.GetInt("Key_", 0);
+
+        // score += Coin_;
+        // quiz += CoinQuest_;
+        // key += Key_;
+
+        // dataParsistenceManager.SaveGame();
+        // audioManager.PlayAllAudio();
+        // Destroy(audioManager.gameObject);
+        DataParsistenceManager.instance.SaveGame();
         SceneManager.LoadScene("MapScene");
         Time.timeScale = 1;
     }
 
     public void IsMenang()
     {
+        // if (audioManager != null)
+        // {
+        //     audioManager.StopAllAudio(); // Metode yang Anda buat di AudioManager
+        // }
+
+        Destroy(audioManager.gameObject);
+        audioMenang.Play();
         PanelMenang.SetActive(true);
         keyTextFromPanel.text = key.ToString();
         ScoreTextFromPanel.text = score.ToString();
@@ -119,13 +151,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void GoToMainMenu()
     {
+        // Destroy(audioManager.gameObject);
+        DataParsistenceManager.instance.SetSaveOnUnload(false);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1;
-    }
-
-    public void LoadData(GameData data)
-    {
-
     }
 
     public void SaveData(GameData data)
@@ -133,5 +162,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.DataCoin = score;
         data.DataKey = key;
         data.DataCoinQuest = quiz;
+    }
+    public void LoadData(GameData data)
+    {
+        // throw new System.NotImplementedException();
     }
 }

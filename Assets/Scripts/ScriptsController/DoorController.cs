@@ -46,6 +46,7 @@ public class DoorController : MonoBehaviour
         if (animator != null)
         {
             animator.SetTrigger("Open");
+            gameManager.IsMenang();
         }
     }
 
@@ -55,7 +56,7 @@ public class DoorController : MonoBehaviour
         if (isPlayerNear && isOpen)
         {
             // Mulai proses perpindahan scene
-            StartCoroutine(TransitionToNextScene());
+            // StartCoroutine(TransitionToNextScene());
         }
     }
 
@@ -63,7 +64,6 @@ public class DoorController : MonoBehaviour
     {
         // Tunggu selama transitionDelay
         yield return new WaitForSeconds(transitionDelay);
-        gameManager.IsMenang();
         // Time.timeScale = 0;
         // Pindah ke scene berikutnya
         // SceneManager.LoadScene(nextSceneName);
