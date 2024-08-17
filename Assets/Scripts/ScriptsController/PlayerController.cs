@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         trigger.triggers.Add(pointerDown);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (isDead) return;
 
@@ -138,6 +138,7 @@ public class PlayerController : MonoBehaviour
         if (collider.gameObject.CompareTag("Trap") && !isDead)
         {
             PlayerIsAttacked();
+            Debug.Log("dari script player, Player hit by trap!");
         }
     }
 

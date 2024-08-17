@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8335772070143698044}
   - component: {fileID: 7229651777671806403}
   - component: {fileID: 2661427818190628782}
+  - component: {fileID: 4439029634013789827}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -92,7 +93,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!61 &2755330863921474399
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -425,3 +426,20 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &4439029634013789827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2755330863921474371}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40360346b1215743a4781bf555d97af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayCastOrigin: {fileID: 0}
+  playerFeet: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
