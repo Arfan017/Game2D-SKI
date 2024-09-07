@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            // PlayAllAudio();
         }
         else
         {
@@ -28,7 +29,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         audioSource.clip = Backsound;
-        audioSource.Play();
+        PlayAllAudio();
     }
 
     public void StopAllAudio()
@@ -43,7 +44,7 @@ public class AudioManager : MonoBehaviour
     {
         if (audioSource != null)
         {
-            audioSource.Stop();
+            audioSource.Play();
         }
     }
 }

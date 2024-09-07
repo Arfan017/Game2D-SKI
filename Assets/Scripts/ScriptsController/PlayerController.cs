@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
         gameManager = GameManager.Instance;
 
@@ -40,6 +38,12 @@ public class PlayerController : MonoBehaviour
 
         // Calculate jump force based on desired jump height
         jumpForce = Mathf.Sqrt(2 * jumpHeight * Mathf.Abs(Physics2D.gravity.y));
+    }
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        coll = GetComponent<CircleCollider2D>();
     }
 
     void SetupButton(Button button, float direction)
@@ -157,5 +161,41 @@ public class PlayerController : MonoBehaviour
     public void DestroyGameObject()
     {
         Destroy(gameObject);
+    }
+
+    void CheckCollisions()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 0.5f);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Enemy") && !isDead)
+            {
+                HandleEnemyCollision(hitCollider);
+            }
+            else if (hitCollider.CompareTag("Trap") && !isDead)
+            {
+                PlayerIsAttacked();
+                Debug.Log("dari script player, Player hit by trap!");
+            }
+        }
+    }
+
+    void HandleEnemyCollision(Collider2D enemyCollider)
+    {
+        if (rb.velocity.y < 0)
+        {
+            EnemyController enemyController = enemyCollider.GetComponent<EnemyController>();
+            if (enemyController != null)
+            {
+                enemyController.EnemyIsAttcked();
+            }
+            audioHitEnemy.Play();
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce / 2);
+        }
+        else
+        {
+            PlayerIsAttacked();
+            Debug.Log("dari script player, Player hit by enemy!");
+        }
     }
 }

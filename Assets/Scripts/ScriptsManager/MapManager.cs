@@ -41,6 +41,7 @@ public class MapManager : MonoBehaviour, IDataPersistence
     private void Start()
     {
         DataParsistenceManager.instance.LoadGame();
+        // AudioManager.instance.PlayAllAudio();
 
         Textcoin.text = coin.ToString();
         TextcoinQuest.text = coinQuest.ToString();
@@ -60,14 +61,14 @@ public class MapManager : MonoBehaviour, IDataPersistence
 
     public void ChangeSceneGameLvl1()
     {
-        SceneManager.LoadScene("gamelvl1");
+        LoadScene(3);
     }
 
     private void ChangeSceneGameLvl2()
     {
         if (IsGame2Unlock)
         {
-            SceneManager.LoadScene("gamelvl2");
+            LoadScene(4);
         }
         else
         {
@@ -80,7 +81,7 @@ public class MapManager : MonoBehaviour, IDataPersistence
     {
         if (IsGame3Unlock)
         {
-            SceneManager.LoadScene("gamelvl3");
+            LoadScene(5);
         }
         else
         {
@@ -93,7 +94,7 @@ public class MapManager : MonoBehaviour, IDataPersistence
     {
         if (IsGame4Unlock)
         {
-            SceneManager.LoadScene("gamelvl4");
+            LoadScene(6);
         }
         else
         {
@@ -104,7 +105,7 @@ public class MapManager : MonoBehaviour, IDataPersistence
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainScene");
+        LoadScene(0);
         Time.timeScale = 1;
     }
 
@@ -180,5 +181,32 @@ public class MapManager : MonoBehaviour, IDataPersistence
         data.DataCoinQuest = coinQuest;
         data.DataCoin = coin;
         data.DataKey = key;
+    }
+
+    public void LoadScene(int indexScene)
+    {
+        // loadingScreen.SetActive(true);
+        StartCoroutine(LoadSceneAsynchronously(indexScene));
+    }
+
+    IEnumerator LoadSceneAsynchronously(int indexScene)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(indexScene);
+
+        // operation.allowSceneActivation = false;
+
+        while (!operation.isDone)
+        {
+            // float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            // progressBar.value = progress;
+
+            // if (operation.progress >= 0.9f)
+            // {
+            //     progressBar.value = 1f;
+            //     operation.allowSceneActivation = true;
+            // }
+
+            yield return null;
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         dataParsistenceManager = FindAnyObjectByType<DataParsistenceManager>();
         audioManager = FindAnyObjectByType<AudioManager>();
+        AudioManager.instance.PlayAllAudio();
     }
 
     public void AddScore(int PointScore)
@@ -98,7 +100,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // {
         //     audioManager.StopAllAudio(); // Metode yang Anda buat di AudioManager
         // }
-        Destroy(audioManager.gameObject);
+        // Destroy(audioManager.gameObject);
         AudioManager.instance.StopAllAudio();
         audiokalah.Play();
         PanelKalah.SetActive(true);
@@ -118,18 +120,19 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // audioManager.PlayAllAudio();
         // Destroy(audioManager.gameObject);
         DataParsistenceManager.instance.SaveGame();
-        SceneManager.LoadScene("MapScene");
+        LoadScene(2);
         Time.timeScale = 1;
     }
 
     public void IsMenang()
     {
-        // if (audioManager != null)
-        // {
-        //     audioManager.StopAllAudio(); // Metode yang Anda buat di AudioManager
-        // }
+        if (audioManager != null)
+        {
+            audioManager.StopAllAudio(); // Metode yang Anda buat di AudioManager
+        }
 
-        Destroy(audioManager.gameObject);
+        // Destroy(audioManager.gameObject);
+        AudioManager.instance.StopAllAudio();
         audioMenang.Play();
         PanelMenang.SetActive(true);
         keyTextFromPanel.text = key.ToString();
@@ -153,7 +156,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         // Destroy(audioManager.gameObject);
         DataParsistenceManager.instance.SetSaveOnUnload(false);
-        SceneManager.LoadScene("MainScene");
+        LoadScene(0);
         Time.timeScale = 1;
     }
 
@@ -163,8 +166,38 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.DataKey = key;
         data.DataCoinQuest = quiz;
     }
+    
     public void LoadData(GameData data)
     {
         // throw new System.NotImplementedException();
+    }
+
+
+    public void LoadScene(int indexScene)
+    {
+        // loadingScreen.SetActive(true);
+        StartCoroutine(LoadSceneAsynchronously(indexScene));
+    }
+
+    IEnumerator LoadSceneAsynchronously(int indexScene)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(indexScene);
+
+        // operation.allowSceneActivation = false;
+
+        while (!operation.isDone)
+        {
+            // float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            // progressBar.value = progress;
+
+            // if (operation.progress >= 0.9f)
+            // {
+            //     progressBar.value = 1f;
+            //     operation.allowSceneActivation = true;
+            // }
+
+            yield return null;
+        }
+        AudioManager.instance.PlayAllAudio();
     }
 }
