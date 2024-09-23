@@ -4029,6 +4029,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Trap
       objectReference: {fileID: 0}
+    - target: {fileID: -4924142110641131780, guid: 40c9e9e41cde6cd4f875b80997887dcb, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: -4924142110641131780, guid: 40c9e9e41cde6cd4f875b80997887dcb, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: -4924142110641131780, guid: 40c9e9e41cde6cd4f875b80997887dcb, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6039216
+      objectReference: {fileID: 0}
     - target: {fileID: -4867865679528209907, guid: 40c9e9e41cde6cd4f875b80997887dcb, type: 3}
       propertyPath: m_TagString
       value: Trap
@@ -10611,7 +10623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: main manu
+  m_text: main menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4ba51a7c5089abc46b51758ba3e8373c, type: 2}
   m_sharedMaterial: {fileID: -1378752512932207064, guid: 4ba51a7c5089abc46b51758ba3e8373c, type: 2}

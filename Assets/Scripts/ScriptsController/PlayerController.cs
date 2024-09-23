@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private float moveInput = 0f;
     private float currentSpeed = 0f;
+    private Vector3 checkpointPosition;
 
     void Start()
     {
@@ -153,9 +155,18 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerIsAttacked()
     {
-        animator.SetBool("IsDead", true);
-        isDead = true;
-        gameManager.IsKalah();
+
+        animator.SetBool("IsDead", true); // Set animasi kematian
+        gameManager.IsKalah(); // Set status kalah
+
+        if (gameManager.IsRespawn)
+        {
+            StartCoroutine(RespawnWithDelay(2f)); // Respawn jika isRespawn = true
+        }
+        else
+        {
+            Debug.Log("Game Over"); // Jika isRespawn = false, tampilkan "Game Over"
+        }
     }
 
     public void DestroyGameObject()
@@ -197,5 +208,24 @@ public class PlayerController : MonoBehaviour
             PlayerIsAttacked();
             Debug.Log("dari script player, Player hit by enemy!");
         }
+    }
+    void RespawnPlayer()
+    {
+        transform.position = checkpointPosition;
+        rb.velocity = Vector2.zero;
+        isDead = false;
+        animator.SetBool("IsDead", false);
+    }
+
+    public void SetCheckpoint(Vector3 position)
+    {
+        checkpointPosition = position;
+        Debug.Log("Checkpoint set at: " + position);
+    }
+
+    private IEnumerator RespawnWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Tunggu selama 'delay' detik
+        RespawnPlayer(); // Panggil fungsi respawn setelah delay
     }
 }

@@ -9,7 +9,9 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: cc34d0f3dc257a442819830b408c5322, type: 3}
   missingFiles: []
-  errors: []
+  errors:
+  - Texture was imported at a smaller size. Make sure 'Max Size' on '../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Dark_Group1
+    2.png' is at least '5120'
   warnings: []
   missingSortingLayers: []
   missingLayers: []

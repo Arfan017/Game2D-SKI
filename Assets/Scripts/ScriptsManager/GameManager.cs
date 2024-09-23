@@ -23,8 +23,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private int score = 0;
     private int key = 0;
     private int quiz = 0;
+    private int MaxHealth = 3;
     private DataParsistenceManager dataParsistenceManager;
     private AudioManager audioManager;
+    public Image[] HpActive;
+    public Sprite HpInactive;
+    private int JumlahMati = 3;
+    private bool isRespawn;
+    public bool IsRespawn { get => isRespawn; set => isRespawn = value; }
 
     private void Awake()
     {
@@ -40,6 +46,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
+        IsRespawn = true;
         dataParsistenceManager = FindAnyObjectByType<DataParsistenceManager>();
         audioManager = FindAnyObjectByType<AudioManager>();
         AudioManager.instance.PlayAllAudio();
@@ -96,14 +103,23 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void IsKalah()
     {
-        // if (audioManager != null)
-        // {
-        //     audioManager.StopAllAudio(); // Metode yang Anda buat di AudioManager
-        // }
-        // Destroy(audioManager.gameObject);
-        AudioManager.instance.StopAllAudio();
-        audiokalah.Play();
-        PanelKalah.SetActive(true);
+        MaxHealth -= 1;
+        JumlahMati -= 1;
+
+        Debug.Log("MaxHealth: " + MaxHealth + ", " + "JumlahMati: " + JumlahMati);
+
+        if (MaxHealth != 0)
+        {
+            HpActive[JumlahMati].GetComponent<Image>().sprite = HpInactive;
+        }
+        else
+        {
+            isRespawn = false;
+            HpActive[JumlahMati].GetComponent<Image>().sprite = HpInactive;
+            AudioManager.instance.StopAllAudio();
+            audiokalah.Play();
+            PanelKalah.SetActive(true);
+        }
     }
 
     public void Selanjutnya()
