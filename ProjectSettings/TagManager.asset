@@ -15,6 +15,7 @@ TagManager:
   - pos5
   - pos6
   - pin
+  - Snake
   layers:
   - Default
   - TransparentFX

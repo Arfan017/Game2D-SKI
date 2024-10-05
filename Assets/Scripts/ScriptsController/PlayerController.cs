@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private float moveInput = 0f;
     private float currentSpeed = 0f;
     private Vector3 checkpointPosition;
+    private bool isRespawning = false;
 
     void Start()
     {
@@ -79,6 +80,17 @@ public class PlayerController : MonoBehaviour
 
         isGrounded = Physics2D.IsTouchingLayers(coll, groundLayer);
 
+        // Kontrol keyboard
+        float keyboardInput = Input.GetAxisRaw("Horizontal");
+        if (keyboardInput != 0)
+        {
+            moveInput = keyboardInput;
+        }
+        else if (moveInput != 0 && !Input.GetMouseButton(0)) // Jika tidak ada input keyboard dan tidak ada touch input
+        {
+            moveInput = 0;
+        }
+
         // Smooth movement
         if (moveInput != 0)
         {
@@ -108,6 +120,12 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("IsJump", false);
         }
+
+        // Keyboard jump
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Jump();
+        }
     }
 
     void Jump()
@@ -122,15 +140,22 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Enemy") && !isDead)
+        if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("Snake") && !isDead && !isRespawning)
         {
             if (rb.velocity.y < 0)
             {
                 EnemyController enemyController = collider.GetComponent<EnemyController>();
+                SnakeEnemy snakeEnemy = collider.GetComponent<SnakeEnemy>();
+
                 if (enemyController != null)
                 {
                     enemyController.EnemyIsAttcked();
                 }
+                else if (snakeEnemy != null)
+                {
+                    snakeEnemy.EnemyIsAttcked();
+                }
+
                 audioHitEnemy.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce / 2); // Bounce after hitting enemy
             }
@@ -156,16 +181,20 @@ public class PlayerController : MonoBehaviour
     public void PlayerIsAttacked()
     {
 
-        animator.SetBool("IsDead", true); // Set animasi kematian
-        gameManager.IsKalah(); // Set status kalah
+        if (!isDead && !isRespawning)
+        {
+            isDead = true;
+            animator.SetBool("IsDead", true);
+            gameManager.IsKalah();
 
-        if (gameManager.IsRespawn)
-        {
-            StartCoroutine(RespawnWithDelay(2f)); // Respawn jika isRespawn = true
-        }
-        else
-        {
-            Debug.Log("Game Over"); // Jika isRespawn = false, tampilkan "Game Over"
+            if (gameManager.IsRespawn)
+            {
+                StartCoroutine(RespawnWithDelay(2f));
+            }
+            else
+            {
+                Debug.Log("Game Over");
+            }
         }
     }
 
@@ -183,6 +212,10 @@ public class PlayerController : MonoBehaviour
             {
                 HandleEnemyCollision(hitCollider);
             }
+            else if (hitCollider.CompareTag("Snake") && !isDead)
+            {
+                HandleEnemySnakeCollision(hitCollider);
+            }
             else if (hitCollider.CompareTag("Trap") && !isDead)
             {
                 PlayerIsAttacked();
@@ -196,10 +229,33 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.y < 0)
         {
             EnemyController enemyController = enemyCollider.GetComponent<EnemyController>();
+
             if (enemyController != null)
             {
                 enemyController.EnemyIsAttcked();
             }
+
+            audioHitEnemy.Play();
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce / 2);
+        }
+        else
+        {
+            PlayerIsAttacked();
+            Debug.Log("dari script player, Player hit by enemy!");
+        }
+    }
+    
+    void HandleEnemySnakeCollision(Collider2D enemyCollider)
+    {
+        if (rb.velocity.y < 0)
+        {
+            SnakeEnemy snakeEnemy = enemyCollider.GetComponent<SnakeEnemy>();
+
+            if (snakeEnemy != null)
+            {
+                snakeEnemy.EnemyIsAttcked();
+            }
+
             audioHitEnemy.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce / 2);
         }
@@ -225,7 +281,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator RespawnWithDelay(float delay)
     {
-        yield return new WaitForSeconds(delay); // Tunggu selama 'delay' detik
-        RespawnPlayer(); // Panggil fungsi respawn setelah delay
+        isRespawning = true;
+        yield return new WaitForSeconds(delay);
+        RespawnPlayer();
+        isRespawning = false;
     }
 }
