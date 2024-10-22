@@ -12,8 +12,8 @@ ScriptedImporter:
   errors:
   - Errors detected in tileset 'TileSet/Autumn.tsx'. Check the tileset inspector
     for more details. Your map may be broken until these are fixed.
-  - Errors detected in tileset 'TileSet/coba.tsx'. Check the tileset inspector for
-    more details. Your map may be broken until these are fixed.
+  - Could not generate asset path for 'C:/Users/LENOVO/Pictures/Woodspike1_Dark_Group2.png'
+  - 'Missing texture asset for tile 49: C:/Users/LENOVO/Pictures/Woodspike1_Dark_Group2.png'
   warnings:
   - Tileset 'coba' is an embedded tileset. Exported tilesets are preferred.
   missingSortingLayers: []

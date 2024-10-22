@@ -10,8 +10,8 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: cc34d0f3dc257a442819830b408c5322, type: 3}
   missingFiles: []
   errors:
-  - Texture was imported at a smaller size. Make sure 'Max Size' on '../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Dark_Group1
-    2.png' is at least '5120'
+  - Atlas is not big enough to fit first tile. Try a larger atlas setting.
+  - Atlas size is (2048, 2048) but we need at least (2050, 2050).
   warnings: []
   missingSortingLayers: []
   missingLayers: []
@@ -19,7 +19,7 @@ ScriptedImporter:
   importerVersion: 13
   pixelsPerUnit: 100
   edgesPerEllipse: 32
-  numberOfObjectsImported: 126
+  numberOfObjectsImported: 116
   useSpriteAtlas: 1
   atlasWidth: 2048
   atlasHeight: 2048

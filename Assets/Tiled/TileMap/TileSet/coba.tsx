@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.0" name="coba" tilewidth="5120" tileheight="5120" tilecount="56" columns="0">
+<tileset version="1.10" tiledversion="1.11.0" name="coba" tilewidth="5120" tileheight="5120" tilecount="57" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image source="../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Clear.png" width="512" height="512"/>
@@ -185,9 +185,16 @@
   <image source="../../../Assets/2DPlatformerCartoonPack/Interactibles/Chests/Gold.png" width="512" height="512"/>
  </tile>
  <tile id="54" x="0" y="0" width="512" height="512">
-  <image source="../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Dark_Group1 2.png" width="5120" height="5120"/>
+  <image source="../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Dark_Group1_2.png" width="512" height="512"/>
  </tile>
  <tile id="55">
-  <image source="../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Dark_Group1 2.png" width="5120" height="5120"/>
+  <image source="../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Dark_Group1_2.png" width="512" height="512"/>
+ </tile>
+ <tile id="56">
+  <image source="../../../Assets/2DPlatformerCartoonPack/Obstacles/Spikes/Woodspike1_Dark_Group2_1.PNG" width="512" height="512"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="166" width="512" height="346"/>
+   <object id="2" x="0" y="166" width="512" height="346"/>
+  </objectgroup>
  </tile>
 </tileset>
