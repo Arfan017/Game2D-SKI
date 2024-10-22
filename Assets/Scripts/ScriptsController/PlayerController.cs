@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("dari script player, Player hit by enemy!");
         }
     }
-    
+
     void HandleEnemySnakeCollision(Collider2D enemyCollider)
     {
         if (rb.velocity.y < 0)
